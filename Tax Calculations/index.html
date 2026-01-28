@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculations</title>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .calculator{
+            width: 400px;
+            background-color: white;
+            margin-top: 200px;
+            justify-content: center;
+            border-radius: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <form id="taxform" onsubmit="tax(); return false;">
+            <div class="Name">
+                <label for="username">Username: </label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div class="Date">
+                <label for="from">From: </label>
+                <select name="from" id="from">
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                </select>
+            </div>
+            <div class="Date">
+
+            </div>
+            <label for="to">To: </label>
+            <select name="to" id="to">
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+                <option value="2031">2031</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Calculate Tax">
+        </form>
+        <p id="answer"></p>
+    </div>
+</body>
+<script>
+    function tax(){
+        const fromDate = document.getElementById("from").value;
+        const toDate = document.getElementById("to").value;
+        const user = document.getElementById("username").value;
+        let amount = 1000 * (toDate-fromDate);
+        amount += 200 * Math.max(0, (toDate-fromDate-1));
+        amount = Math.max(0, amount);
+        document.getElementById("answer").innerHTML = "Tax Amount for " + user + " is: " + amount;
+    }
+</script>
+</html>
