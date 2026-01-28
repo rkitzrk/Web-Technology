@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Newspaper Viewer</title>
+
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h2>PDF Newspaper</h2>
+    <div class="modes">
+        <button onclick="setMode('single')">Single Page</button>
+        <button onclick="setMode('scroll')">Scroll View</button>
+        <button onclick="setMode('cards')">Card View</button>
+    </div>
+</header>
+
+<div class="nav" id="nav">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageInfo"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<main id="viewer"></main>
+
+<script src="script.js"></script>
+</body>
+</html>
