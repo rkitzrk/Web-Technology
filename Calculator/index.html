@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .calculator{
+            width: 400px;
+            height: 600px;
+            background-color: black;
+            margin-top: 200px;
+            justify-content: center;
+            border-radius: 20px;
+        }
+        .show{
+            height: 20%;
+            margin: 10px;
+            border-radius: 20px;
+        }
+        .cal{
+            height: 75%;
+            margin: 10px;
+            background-color: gray;
+            border-radius: 20px;
+        }
+        .row button{
+            font-family: "Bitcount Single", system-ui;
+            font-weight: 400;
+            width: 70px;
+            height: 70px;
+            margin: 10px;
+            font-size: medium;
+            border-radius: 20px;
+            background-color: rgb(182, 182, 182);
+            font-size: 50px;
+        }
+        #answer{
+            font-family: "Bitcount Single", system-ui;
+            font-weight: 400;
+            height: 100%;
+            width: 98%;
+            border-radius: 20px;
+            font-size: 50px;
+            text-align: right;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="show">
+            <input type="text" id="answer"></textarea>
+        </div>
+        <div class="cal">
+            <div class="row">
+                <button onclick="cal(value)" name="left-par" value="(">(</button>
+                <button onclick="cal(value)" name="right-par" value=")">)</button>
+                <button onclick="cal(value)" name="percentage" value="%">%</button>
+                <button onclick="cal(value)" name="clear" value="AC">AC</button>
+            </div>
+            <div class="row">
+                <button onclick="cal(value)" name="seven" value="7">7</button>
+                <button onclick="cal(value)" name="eight" value="8">8</button>
+                <button onclick="cal(value)" name="nine" value="9">9</button>
+                <button onclick="cal(value)" name="division" value="/">/</button>
+            </div>
+            <div class="row">
+                <button onclick="cal(value)" name="four" value="4">4</button>
+                <button onclick="cal(value)" name="five" value="5">5</button>
+                <button onclick="cal(value)" name="six" value="6">6</button>
+                <button onclick="cal(value)" name="multiply" value="*">*</button>
+            </div>
+            <div class="row">
+                <button onclick="cal(value)" name="one" value="1">1</button>
+                <button onclick="cal(value)" name="two" value="2">2</button>
+                <button onclick="cal(value)" name="three" value="3">3</button>
+                <button onclick="cal(value)" name="minus" value="-">-</button>
+            </div>
+            <div class="row">
+                <button onclick="cal(value)" name="zero" value="0">0</button>
+                <button onclick="cal(value)" name="dot" value="dot">.</button>
+                <button onclick="ans()" name="equal" value="=">=</button>
+                <button onclick="cal(value)" name="plus" value="+">+</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function cal(value){
+        if(value==='AC') document.getElementById("answer").value = "";
+        else document.getElementById("answer").value += value;
+    }
+    function ans(){
+        let s = document.getElementById("answer").value;
+        let ans = 0;
+        for(let i=0; i<s.length; i++){
+            if(s[i]<'0' || s[i]>'9'){
+                let a = s.substring(0, i);
+                let b = s.substring(i+1, s.length);
+                a = parseInt(a), b = parseInt(b);
+                if(s[i]==='+') ans = a+b;
+                else if(s[i]==='-') ans = a-b;
+                else if(s[i]==='*') ans = a*b;
+                else if(s[i]==='/') ans = a/b;
+                break;
+            }
+        }
+        document.getElementById("answer").value += " = " + ans;
+    }
+</script>
+</html>

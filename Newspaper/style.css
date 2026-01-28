@@ -4,7 +4,6 @@ body {
     background: #f2f2f2;
 }
 
-/* Header */
 header {
     background: #222;
     color: white;
@@ -20,19 +19,16 @@ header {
     cursor: pointer;
 }
 
-/* Navigation */
 .nav {
     text-align: center;
     margin: 10px;
 }
 
-/* Viewer */
 main {
     max-width: 1000px;
     margin: auto;
 }
 
-/* Page wrapper */
 .page {
     background: white;
     margin: 20px auto;
@@ -42,7 +38,6 @@ main {
     width: fit-content;
 }
 
-/* ===== CARD MODE FIX ===== */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
