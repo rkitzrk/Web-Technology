@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f1f1f1;
+        }
+
+        .login-card {
+            width: 320px;
+            padding: 20px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            box-shadow: 0 0 8px cyan;
+        }
+
+        input,
+        button {
+            border: 2px solid rgb(148, 243, 243);
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+
+        }
+
+        button {
+            border: none;
+            color: black;
+            border-color: cyan;
+        }
+
+        .btn {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <div class="btn">
+            <button id="login-btn" onclick="log_btn()">Login</button>
+            <button id="register-btn" onclick="Reg_btn()">Register</button>
+        </div>
+        <div id="form_content"></div>
+    </div>
+</body>
+<script>
+    function log_btn() {
+        const fm = document.getElementById('form_content');
+        fm.innerHTML = `<h2>Login</h2>
+
+        <input type="text" placeholder="Username"><br><br><br>
+        <input type="password" placeholder="Password"><br><br><br>
+
+        <button style="background-color: cyan; border-color: cyan;">Login</button>`;
+        document.getElementById('login-btn').style.backgroundColor = "cyan";
+        document.getElementById('register-btn').style.backgroundColor = "";
+    }
+    function Reg_btn() {
+        const fm = document.getElementById('form_content');
+        fm.innerHTML = `<h2>Register</h2>
+
+        <input type="text" placeholder="Username">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <input type="password" placeholder="Confirm Password">
+        
+        <button style="background-color: cyan; border-color: cyan;">Register</button>`;
+        document.getElementById('register-btn').style.backgroundColor = "cyan";
+        document.getElementById('login-btn').style.backgroundColor = "";
+    }
+    log_btn();
+</script>
+
+</html>
