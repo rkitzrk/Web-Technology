@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modes button {
+    margin-left: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.nav {
+    text-align: center;
+    margin: 10px;
+}
+
+main {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.page {
+    background: white;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    width: fit-content;
+}
+
+.notes {
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.notes h4 {
+    margin: 0 0 10px 0;
+}
+
+.notes form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.notes input, .notes textarea {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.notes textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.notes button {
+    padding: 5px 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.notes button:hover {
+    background: #0056b3;
+}
+
+.note {
+    background: #f9f9f9;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
+.cards .page {
+    width: 260px;
+    margin: auto;
+    padding: 8px;
+}
+
+.cards canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+}

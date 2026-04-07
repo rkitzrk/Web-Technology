@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .calculator{
+            width: 400px;
+            height: 600px;
+            background-color: black;
+            margin-top: 50px;
+            justify-content: center;
+            border-radius: 20px;
+        }
+        .show{
+            height: 20%;
+            margin: 10px;
+            border-radius: 20px;
+        }
+        .cal{
+            height: 75%;
+            margin: 10px;
+            background-color: gray;
+            border-radius: 20px;
+        }
+        .row button{
+            font-family: "Bitcount Single", system-ui;
+            font-weight: 400;
+            width: 70px;
+            height: 70px;
+            margin: 10px;
+            font-size: medium;
+            border-radius: 20px;
+            background-color: rgb(182, 182, 182);
+            font-size: 50px;
+        }
+        #answer{
+            font-family: "Bitcount Single", system-ui;
+            font-weight: 400;
+            height: 100%;
+            width: 98%;
+            border-radius: 20px;
+            font-size: 50px;
+            text-align: right;
+            overflow: hidden;
+        }
+        .history{
+            width: 400px;
+            margin-top: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .history h3{
+            margin: 0 0 10px 0;
+        }
+        .history ul{
+            list-style: none;
+            padding: 0;
+        }
+        .history li{
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="show">
+            <input type="text" id="answer">
+        </div>
+        <div class="cal">
+            <div class="row">
+                <button onclick="cal(value)" name="left-par" value="(">(</button>
+                <button onclick="cal(value)" name="right-par" value=")">)</button>
+                <button onclick="cal(value)" name="percentage" value="%">%</button>
+                <button onclick="cal(value)" name="clear" value="AC">AC</button>
+            </div>
+            <div class="row">
+                <button onclick="cal(value)" name="seven" value="7">7</button>
+                <button onclick="cal(value)" name="eight" value="8">8</button>
+                <button onclick="cal(value)" name="nine" value="9">9</button>
+                <button onclick="cal(value)" name="division" value="/">/</button>
+            </div>
+            <div class="row">
+                <button onclick="cal(value)" name="four" value="4">4</button>
+                <button onclick="cal(value)" name="five" value="5">5</button>
+                <button onclick="cal(value)" name="six" value="6">6</button>
+                <button onclick="cal(value)" name="multiply" value="*">*</button>
+            </div>
+            <div class="row">
+                <button onclick="cal(value)" name="one" value="1">1</button>
+                <button onclick="cal(value)" name="two" value="2">2</button>
+                <button onclick="cal(value)" name="three" value="3">3</button>
+                <button onclick="cal(value)" name="minus" value="-">-</button>
+            </div>
+            <div class="row">
+                <button onclick="cal(value)" name="zero" value="0">0</button>
+                <button onclick="cal(value)" name="dot" value=".">.</button>
+                <button onclick="ans()" name="equal" value="=">=</button>
+                <button onclick="cal(value)" name="plus" value="+">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="history">
+        <h3>Calculation History</h3>
+        <button onclick="clearHistory()" style="margin-bottom: 10px; padding: 5px 10px;">Clear History</button>
+        <ul id="history-list"></ul>
+    </div>
+</body>
+<script>
+    let expression = '';
+
+    function cal(value) {
+        if (value === 'AC') {
+            expression = '';
+            document.getElementById('answer').value = '';
+        } else {
+            expression += value;
+            document.getElementById('answer').value = expression;
+        }
+    }
+
+    async function ans() {
+        if (!expression) return;
+
+        try {
+            const response = await fetch('/api/calculate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ expression }),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                alert(data.error || 'Invalid expression.');
+                return;
+            }
+
+            document.getElementById('answer').value = data.result;
+            expression = data.result.toString();
+            loadHistory();
+        } catch (error) {
+            alert('Server error saving calculation.');
+            console.error(error);
+        }
+    }
+
+    async function loadHistory() {
+        try {
+            const response = await fetch('/api/history');
+            if (!response.ok) {
+                throw new Error('Failed to load history.');
+            }
+            const history = await response.json();
+            const list = document.getElementById('history-list');
+            list.innerHTML = '';
+
+            if (history.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = 'No saved history yet.';
+                list.appendChild(li);
+                return;
+            }
+
+            history.forEach(calc => {
+                const li = document.createElement('li');
+                li.textContent = `${calc.expression} = ${calc.result}`;
+                list.appendChild(li);
+            });
+        } catch (error) {
+            const list = document.getElementById('history-list');
+            list.innerHTML = '<li>Error loading history.</li>';
+            console.error(error);
+        }
+    }
+
+    async function clearHistory() {
+        try {
+            const response = await fetch('/api/history', {
+                method: 'DELETE',
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                alert(data.error || 'Could not clear history.');
+                return;
+            }
+            loadHistory();
+        } catch (error) {
+            alert('Server error clearing history.');
+            console.error(error);
+        }
+    }
+
+    loadHistory();
+</script>
+</html>
